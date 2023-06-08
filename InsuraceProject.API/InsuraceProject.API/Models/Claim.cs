@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using InsuraceProject.API.Validation;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
 namespace InsuraceProject.API.Models
@@ -11,15 +12,27 @@ namespace InsuraceProject.API.Models
         public string CoverId { get; set; }
 
         [Required]
-        public DateTime Created { get; set; }
+        [CreateEndDateValidation]
+        public DateTime Created 
+        {
+            get => this.Created; 
+            set 
+            { 
+                if (this.Created.CompareTo(DateTime.Now.AddYears(1)) < 1) 
+                {
+                    this.Created = value;
+                }
+            } 
+        }
 
         public string? Name { get; set; }
 
         [Required]
         public ClaimType Type { get; set; } = ClaimType.Grounding;
 
-        [Required]
+        [Required, Range(1, 100000)]
         public decimal DamageCost { get; set; }
+
     }
 
     public enum ClaimType

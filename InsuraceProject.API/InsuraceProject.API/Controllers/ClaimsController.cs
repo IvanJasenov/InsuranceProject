@@ -27,9 +27,19 @@ namespace InsuraceProject.API.Controllers
         [HttpGet("api/claims")]
         public async Task<IActionResult> GetClaims()
         {
-            var claims = await _repository.GetAllClaims();
-            var maped = _mapper.Map<List<Claim>>(claims);
-            return Ok(maped); 
+            try
+            {
+                var claims = await _repository.GetAllClaims();
+                var maped = _mapper.Map<List<Claim>>(claims);
+                return Ok(maped);
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogCritical($"Exception while getting all claims, exception: {ex.Message}");
+                return StatusCode(500, "A problem hapened while handling your request");
+            }
+           
         }
 
         [HttpGet("api/getclaim")]

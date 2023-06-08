@@ -4,12 +4,11 @@ using InsuraceProject.API.Models;
 
 namespace InsuraceProject.API.MapProfiles
 {
-    public class ClaimProfile : Profile
+    public class CoverProfile : Profile
     {
-        public ClaimProfile()
+        public CoverProfile() 
         {
             CreateMap<ClaimAudit, Claim>();
         }
-        
     }
 }
